@@ -59,14 +59,7 @@ double chisq_stat(int *X, int sample_size, double *p, int N){
         exp_freq[i] = sample_size * p[i];
     }
 
-    // std::cout << "sample:\n";
-    // print_arr(X, sample_size);
-    //std::cout << "obs_freq:\n";
-    // print_arr(obs_freq,N);
-    // std::cout << "p:\n";
-    // print_arr(p,N);
-    // std::cout << "exp_freq:\n";
-    // print_arr(exp_freq,N);
+
     sep('#', 1, 52);
     std::cout << "right_lim = " << N - 1 << "\n";
     std::cout << "sample_size = " << sample_size << "\n";
