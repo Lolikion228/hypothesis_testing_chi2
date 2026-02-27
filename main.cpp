@@ -46,10 +46,10 @@ void test_pchisq(){
 void test_pval(){
     std::mt19937_64 gen(seed);
 
-    double lambda1 = 4.5;
-    double lambda2 = 4.52;
+    double lambda1 = 10.5;
+    double lambda2 = 12.5;
 
-    double p = pval(lambda1, lambda2, 100000, gen);
+    double p = pval(lambda1, lambda2, 50, gen);
     std::cout << "pval = " << p << "\n";
 }
 
