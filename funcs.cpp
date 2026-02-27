@@ -40,7 +40,7 @@ double pchsisq(double t, int k){
 }
 
 
-double chisq_stat(int *X, int sample_size, double *p, int N){
+double chisq_stat(int *X, int sample_size, double *p, int N, int verbose){
     double res = 0;
     
     double obs_freq[N]{};
@@ -59,15 +59,15 @@ double chisq_stat(int *X, int sample_size, double *p, int N){
         exp_freq[i] = sample_size * p[i];
     }
 
-
-    sep('#', 1, 52);
-    std::cout << "right_lim = " << N - 1 << "\n";
-    std::cout << "sample_size = " << sample_size << "\n";
-    std::cout<< "obs_freq_sum = " << sum_arr(obs_freq, N) << "\n";
-    std::cout<< "exp_freq_sum = " << sum_arr(exp_freq, N) << "\n";
-    sep('#', 1, 52);
-    std::cout <<"\n";
-    
+    if(verbose >= 2){
+        sep('#', 1, 52);
+        std::cout << "right_lim = " << N - 1 << "\n";
+        std::cout << "sample_size = " << sample_size << "\n";
+        std::cout<< "obs_freq_sum = " << sum_arr(obs_freq, N) << "\n";
+        std::cout<< "exp_freq_sum = " << sum_arr(exp_freq, N) << "\n";
+        sep('#', 1, 52);
+        std::cout <<"\n";
+    }
     double cum_exp_freq_hist[N]{};
     double diff_hist[N]{};
     double summand_hist[N]{};
@@ -99,21 +99,21 @@ double chisq_stat(int *X, int sample_size, double *p, int N){
         summand_hist[N-1] = summand;
     }
 
-    
-    sep('#', 1, 52);
-    std::cout << " i  obs_freq  exp_freq  cum_exp_freq   diff  summand\n";
-    sep('#', 1, 52);
-    for(int i=0; i<N; ++i){
-        printf("%2d  %8.1f  %8.2f  %12.2f  %5.2f  %7.2f\n",
-               i, obs_freq[i], exp_freq[i], cum_exp_freq_hist[i],
-               diff_hist[i], summand_hist[i]);
-        if(diff_hist[i] != 0){
-            sep('-', 1, 52);
+    if(verbose >= 2){
+        sep('#', 1, 52);
+        std::cout << " i  obs_freq  exp_freq  cum_exp_freq   diff  summand\n";
+        sep('#', 1, 52);
+        for(int i=0; i<N; ++i){
+            printf("%2d  %8.1f  %8.2f  %12.2f  %5.2f  %7.2f\n",
+                i, obs_freq[i], exp_freq[i], cum_exp_freq_hist[i],
+                diff_hist[i], summand_hist[i]);
+            if(diff_hist[i] != 0){
+                sep('-', 1, 52);
+            }
         }
+        sep('#', 1, 52);
+        std::cout << "\n";
     }
-    sep('#', 1, 52);
-    std::cout << "\n";
-
     // for(int i=0; i<N; ++i){
     //     res += pow(obs_freq[i] - exp_freq[i], 2) / (sample_size * p[i]);
     // }

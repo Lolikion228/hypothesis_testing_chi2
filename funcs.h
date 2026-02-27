@@ -4,4 +4,4 @@
 
 double pchsisq(double t, int k);
 
-double chisq_stat(int *X, int sample_size, double *p, int N);
+double chisq_stat(int *X, int sample_size, double *p, int N, int verbose);

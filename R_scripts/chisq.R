@@ -35,4 +35,4 @@ read_and_plot_base <- function(filename) {
 }
 
 # Использование
-read_and_plot_base("./chisq_res.txt")
+read_and_plot_base("./txt/chisq_res.txt")

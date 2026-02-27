@@ -1,4 +1,4 @@
-z <- as.numeric(readLines("./pois_res.txt"))
+z <- as.numeric(readLines("./txt/pois_res.txt"))
 lambda <- z[1]
 x <- z[2:length(z)]
 h <- hist(x, xlim=c(0,40), freq=0)

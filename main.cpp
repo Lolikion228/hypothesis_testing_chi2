@@ -44,27 +44,50 @@ void test_pchisq(){
 
 
 void test_pval(){
-    std::mt19937_64 gen(seed);
 
-    double lambda1 = 10.5;
-    double lambda2 = 12.5;
+    std::mt19937_64 gen(std::random_device{}());
 
-    double p = pval(lambda1, lambda2, 50, gen);
+    double lambda1 = 20.5;
+    double lambda2 = 20.9;
+
+    double p = pval(lambda1, lambda2, 10000, gen, 2);
     std::cout << "pval = " << p << "\n";
 }
 
 
 
-void test_chisq_stat(){
+void test_psample(){
+    std::mt19937_64 gen(std::random_device{}());
+    double lambda1 = 20.6;
+    double lambda2 = 21.1;
+    const int psample_size = 10002;
+    int main_sample_size = 1002;
 
+    double p0[psample_size];
+    psample(lambda1, lambda1, psample_size, p0, main_sample_size, gen);
+    FILE *f = fopen("./txt/psample_h0.txt", "w+");
+    for(int i=0; i<psample_size; ++i){
+        fprintf(f, "%f\n", p0[i]);
+    }
+    fclose(f);
 
+    double p1[psample_size];
+    psample(lambda1, lambda2, psample_size, p1, main_sample_size, gen);
+    f = fopen("./txt/psample_h1.txt", "w+");
+    for(int i=0; i<psample_size; ++i){
+        fprintf(f, "%f\n", p1[i]);
+    }
+    fclose(f);
+
+    f = fopen("./txt/psample_params.txt", "w+");
+    fprintf(f, "%f %f %d %d\n", lambda1, lambda2, main_sample_size, psample_size);
+    fclose(f);
 }
 
 
 int main(){
     //test_rpois();
     //test_pchisq();
-    test_pval();
-
-    // double chi2 = chisq_stat()
+    //test_pval();
+    test_psample();
 }
