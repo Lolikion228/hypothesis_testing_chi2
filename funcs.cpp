@@ -76,28 +76,28 @@ double chisq_stat(int *X, int sample_size, double *p, int N, int verbose){
     double diff;
     double summand;
 
-    for(int i=0; i<N; ++i){
-        cum_obs_freq += obs_freq[i];
-        cum_exp_freq += exp_freq[i];
-        cum_exp_freq_hist[i] = cum_exp_freq;
-        if(cum_exp_freq >= 5.){
-            diff = cum_obs_freq - cum_exp_freq;
-            summand = diff * diff / cum_exp_freq;
-            res += summand;
-            cum_exp_freq = 0;
-            cum_obs_freq = 0;
-            diff_hist[i] = diff;
-            summand_hist[i] = summand;
-        }
-    }
+    // for(int i=0; i<N; ++i){
+    //     cum_obs_freq += obs_freq[i];
+    //     cum_exp_freq += exp_freq[i];
+    //     cum_exp_freq_hist[i] = cum_exp_freq;
+    //     if(cum_exp_freq >= 5.){
+    //         diff = cum_obs_freq - cum_exp_freq;
+    //         summand = diff * diff / cum_exp_freq;
+    //         res += summand;
+    //         cum_exp_freq = 0;
+    //         cum_obs_freq = 0;
+    //         diff_hist[i] = diff;
+    //         summand_hist[i] = summand;
+    //     }
+    // }
 
-    if(cum_exp_freq != 0){
-        diff = cum_obs_freq - cum_exp_freq;
-        summand = diff * diff / cum_exp_freq;
-        res += summand;
-        diff_hist[N-1] = diff;
-        summand_hist[N-1] = summand;
-    }
+    // if(cum_exp_freq != 0){
+    //     diff = cum_obs_freq - cum_exp_freq;
+    //     summand = diff * diff / cum_exp_freq;
+    //     res += summand;
+    //     diff_hist[N-1] = diff;
+    //     summand_hist[N-1] = summand;
+    // }
 
     if(verbose >= 2){
         sep('#', 1, 52);
@@ -114,9 +114,10 @@ double chisq_stat(int *X, int sample_size, double *p, int N, int verbose){
         sep('#', 1, 52);
         std::cout << "\n";
     }
-    // for(int i=0; i<N; ++i){
-    //     res += pow(obs_freq[i] - exp_freq[i], 2) / (sample_size * p[i]);
-    // }
+
+    for(int i=0; i<N; ++i){
+        res += pow(obs_freq[i] - exp_freq[i], 2) / (sample_size * p[i]);
+    }
 
     return res;
 }

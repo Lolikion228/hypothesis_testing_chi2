@@ -55,13 +55,12 @@ void test_pval(){
 }
 
 
-
 void test_psample(){
     std::mt19937_64 gen(std::random_device{}());
-    double lambda1 = 20.6;
-    double lambda2 = 21.1;
-    const int psample_size = 10002;
-    int main_sample_size = 1002;
+    double lambda1 = 31.6;
+    double lambda2 = 32;
+    const int psample_size = 10000;
+    int main_sample_size = 1000;
 
     double p0[psample_size];
     psample(lambda1, lambda1, psample_size, p0, main_sample_size, gen);
@@ -85,9 +84,40 @@ void test_psample(){
 }
 
 
+void test_chi2(){
+    int N = 100000;
+    double h0_param = 9.1;
+    double h1_param = 9.1;
+    std::mt19937_64 gen(std::random_device{}());
+
+    int right_lim = h0_param + 3 * sqrt(h0_param);
+    double p[right_lim];
+    double t = exp(-h0_param);
+    double sum = t;
+    p[0] = t;
+    for(int i=1; i<right_lim; ++i){
+        t *= h0_param / i;
+        p[i] = t;
+        sum += p[i];
+    }
+    p[right_lim - 1] += (1 - sum);
+
+    FILE *f = fopen("./txt/chi2.txt", "w+");
+    fprintf(f,"%d\n", right_lim - 1);
+    int X[N];
+    double t0;
+    for(int i=0; i<1000; ++i){
+        sample(N, X, h1_param, gen, 0);
+        fprintf(f, "%f\n", chisq_stat(X, N, p, right_lim, 0));
+    }
+    fclose(f);
+
+}
+
 int main(){
     //test_rpois();
     //test_pchisq();
     //test_pval();
-    test_psample();
+    // test_psample();
+    test_chi2();
 }
