@@ -20,8 +20,8 @@ read_and_plot_base <- function(filename) {
        main = paste("График y(x) и плотность χ²(k =", k, ")"))
   
 
-  x_vals <- seq(0, max(data$x, qchisq(0.999, k)), length.out = 1000)
-  lines(x_vals, dchisq(x_vals, df = k), 
+  x_vals <- seq(0, max(data$x, pchisq(0.999, k)), length.out = 1000)
+  lines(x_vals, pchisq(x_vals, df = k), 
         col = "red", 
         lwd = 2)
   
