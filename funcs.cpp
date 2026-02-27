@@ -1,5 +1,14 @@
 #include "funcs.h"
 
+void sep(char c, int n, int m){
+    for(int i=0; i<n; ++i){
+        for(int j=0; j<m; ++j){
+            std::cout << c;
+        }
+        std::cout << "\n";
+    }
+
+}
 
 template <typename T>
 void print_arr(T x, int n){
@@ -58,9 +67,13 @@ double chisq_stat(int *X, int sample_size, double *p, int N){
     // print_arr(p,N);
     // std::cout << "exp_freq:\n";
     // print_arr(exp_freq,N);
+    sep('#', 1, 52);
+    std::cout << "right_lim = " << N - 1 << "\n";
     std::cout << "sample_size = " << sample_size << "\n";
     std::cout<< "obs_freq_sum = " << sum_arr(obs_freq, N) << "\n";
     std::cout<< "exp_freq_sum = " << sum_arr(exp_freq, N) << "\n";
+    sep('#', 1, 52);
+    std::cout <<"\n";
     
     double cum_exp_freq_hist[N]{};
     double diff_hist[N]{};
@@ -93,19 +106,19 @@ double chisq_stat(int *X, int sample_size, double *p, int N){
         summand_hist[N-1] = summand;
     }
 
+    
+    sep('#', 1, 52);
     std::cout << " i  obs_freq  exp_freq  cum_exp_freq   diff  summand\n";
+    sep('#', 1, 52);
     for(int i=0; i<N; ++i){
         printf("%2d  %8.1f  %8.2f  %12.2f  %5.2f  %7.2f\n",
                i, obs_freq[i], exp_freq[i], cum_exp_freq_hist[i],
                diff_hist[i], summand_hist[i]);
         if(diff_hist[i] != 0){
-            for(int j=0; j<52; ++j)
-                std::cout << '-';
-            std::cout << "\n";
+            sep('-', 1, 52);
         }
     }
-    for(int j=0; j<52; ++j)
-        std::cout << '-';
+    sep('#', 1, 52);
     std::cout << "\n";
 
     // for(int i=0; i<N; ++i){

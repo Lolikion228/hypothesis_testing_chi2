@@ -7,7 +7,6 @@ double pval(double h0_param, double h1_param, int sample_size, std::mt19937_64 &
 
 
     int right_lim = h0_param + 3 * sqrt(h0_param);
-    std::cout << "right_lim = " << right_lim << "\n";
     double p[right_lim];
     
     double t = exp(-h0_param);
