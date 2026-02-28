@@ -1,6 +1,5 @@
 #include <iostream>
 #include "gen.h"
-#include "funcs.h"
 #include "mod.h"
 #include "PROBDIST.H"
 
@@ -57,8 +56,8 @@ void test_pval(){
 
 void test_psample(){
     std::mt19937_64 gen(std::random_device{}());
-    double lambda1 = 31.6;
-    double lambda2 = 32;
+    double lambda1 = 20.1;
+    double lambda2 = 20.9;
     const int psample_size = 10000;
     int main_sample_size = 1000;
 
@@ -114,10 +113,33 @@ void test_chi2(){
 
 }
 
+
+
+void test_ecdf(){
+
+    double X[] = {0.9, 0.9, 0.04, 0.03, 0.5, 0.5, 0.5, 0.5, 0.7};
+
+    double step = 0.05;
+    int N = 1 / step;
+    double F[N]{};
+
+    ecdf(X, 9, step, F);
+
+    print_arr(X, 9);
+    for(int i=0; i<N; ++i){
+        printf("%.2f  %.2f\n", step*(i+1), F[i]);
+    }
+}
+
+
 int main(){
     //test_rpois();
     //test_pchisq();
     //test_pval();
-    // test_psample();
-    test_chi2();
+    test_psample();
+    // test_chi2();
+    //test_ecdf();
+
+    std::mt19937_64 gen(std::random_device{}());
+    pecdf(20.1, 20.9, 0.15, 10000, 1000, gen);
 }

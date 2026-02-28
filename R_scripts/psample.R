@@ -52,8 +52,8 @@ plot_ecdf_base <- function(params_file, file_h0, file_h1, step = 0.05) {
          lwd = c(2, 2, 1))
   
   # Вывод статистики
-  cat("H0: n =", length(pvals_h0), ", среднее =", mean(pvals_h0), "\n")
-  cat("H1: n =", length(pvals_h1), ", среднее =", mean(pvals_h1), "\n")
+  # cat("H0: n =", length(pvals_h0), ", среднее =", mean(pvals_h0), "\n")
+  # cat("H1: n =", length(pvals_h1), ", среднее =", mean(pvals_h1), "\n")
 }
 
 png("./pics/my_plot.png", width = 1920, height = 1080, res = 120)

@@ -10,14 +10,7 @@ void sep(char c, int n, int m){
 
 }
 
-template <typename T>
-void print_arr(T x, int n){
-    std::cout << "[" ;
-    for(int i=0; i<n; ++i){
-        std::cout << x[i] << " ";
-    }
-    std::cout << "]\n";
-}
+
 
 template <typename T>
 double sum_arr(T x, int n){
