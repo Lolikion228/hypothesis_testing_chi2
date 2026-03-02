@@ -56,6 +56,6 @@ plot_ecdf_base <- function(params_file, file_h0, file_h1, step = 0.05) {
   # cat("H1: n =", length(pvals_h1), ", среднее =", mean(pvals_h1), "\n")
 }
 
-png("./pics/my_plot.png", width = 1920, height = 1080, res = 120)
+png("./pics/psample.png", width = 1920, height = 1080, res = 120)
 plot_ecdf_base("./txt/psample_params.txt", "./txt/psample_h0.txt", "./txt/psample_h1.txt")
 dev.off()

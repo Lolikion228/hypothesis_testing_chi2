@@ -49,6 +49,7 @@ void test_pchisq(){
 }
 
 
+// g++ *.cpp -O3 -march=native -o ./main && time ./main
 void test_pval(){
 
     std::mt19937_64 gen(std::random_device{}());
@@ -56,18 +57,20 @@ void test_pval(){
     double lambda1 = 20.5;
     double lambda2 = 20.9;
 
-    double p = pval(lambda1, lambda2, 10000, gen, 2);
+    double p = pval(lambda1, lambda2, 10000, gen, 1);
     std::cout << "pval = " << p << "\n";
 }
 
 
+// g++ *.cpp -o ./main && time ./main && Rscript ./R_scripts/psample.R
 void test_psample(){
     std::mt19937_64 gen(std::random_device{}());
-    double lambda1 = 20.1;
-    double lambda2 = 20.9;
-    const int psample_size = 10000;
-    int main_sample_size = 1000;
+    double lambda1 = 20.4;
+    double lambda2 = 20.6;
+    const int psample_size = 1000;
+    int main_sample_size = 10000;
 
+    // ecdf of pvalue at H_0
     double p0[psample_size];
     psample(lambda1, lambda1, psample_size, p0, main_sample_size, gen);
     FILE *f = fopen("./txt/psample_h0.txt", "w+");
@@ -76,6 +79,7 @@ void test_psample(){
     }
     fclose(f);
 
+    // ecdf of pvalue at H_1
     double p1[psample_size];
     psample(lambda1, lambda2, psample_size, p1, main_sample_size, gen);
     f = fopen("./txt/psample_h1.txt", "w+");
@@ -88,6 +92,7 @@ void test_psample(){
     fprintf(f, "%f %f %d %d\n", lambda1, lambda2, main_sample_size, psample_size);
     fclose(f);
 }
+
 
 // g++ *.cpp -o ./main && ./main
 void test_chi2_v2(){
@@ -115,6 +120,7 @@ void test_chi2_v2(){
     double res = chisq_stat(X, N, p, right_lim, 2, 3.1);
     std::cout << "chi2 = " << res << "\n";
 }
+
 
 // g++ *.cpp -O3 -march=native -o ./main && time ./main && Rscript ./R_scripts/chi2.R
 void test_chi2(){
@@ -164,17 +170,18 @@ void test_ecdf(){
     }
 }
 
-
+/*
+mem leaks?
+*/
 int main(){
     // test_rpois();
     //test_chi2();
     //test_chi2_v2();
     // test_pchisq();
-
-    test_ecdf();
-
-    //test_pval();
+    // test_ecdf();
+    // test_pval();
     // test_psample();
+
     // std::mt19937_64 gen(std::random_device{}());
     // pecdf(20.1, 20.9, 0.15, 10000, 1000, gen);
 }
