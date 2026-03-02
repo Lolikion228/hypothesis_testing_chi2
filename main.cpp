@@ -28,10 +28,11 @@ void test_rpois(){
 }
 
 
+// g++ *.cpp -o ./main && ./main && Rscript ./R_scripts/pchisq.R
 void test_pchisq(){
-    FILE *f = fopen("./chisq_res.txt", "w+");
+    FILE *f = fopen("./txt/pchisq_res.txt", "w+");
 
-    double k = 10;
+    double k = 20;
     double a = 0.01;
     double b = 20; 
     fprintf(f, "%f\n", k);
@@ -88,7 +89,7 @@ void test_psample(){
     fclose(f);
 }
 
-// g++ *.cpp -O3 -march=native -o ./main && time ./main
+// g++ *.cpp -o ./main && ./main
 void test_chi2_v2(){
     int N = 40;
     double h0_param = 8.1;
@@ -166,13 +167,14 @@ void test_ecdf(){
 
 int main(){
     // test_rpois();
-    //test_pchisq();
+    //test_chi2();
+    //test_chi2_v2();
+
+    test_pchisq();
+
     //test_pval();
     // test_psample();
-    //test_chi2();
-    test_chi2_v2();
     //test_ecdf();
-
     // std::mt19937_64 gen(std::random_device{}());
     // pecdf(20.1, 20.9, 0.15, 10000, 1000, gen);
 }
