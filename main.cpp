@@ -5,17 +5,23 @@
 
 const int seed = 1337;
 
+// g++ *.cpp -o ./main && ./main && Rscript ./R_scripts/pois.R
 void test_rpois(){
     std::mt19937_64 gen(seed);
     const int N = 10000;
-    double lambda = 10.7;
+    double lambda = 20.7;
     int a[N];
 
-    sample(N, a, lambda, gen, 1);
-    
-    FILE *f = fopen("./pois_res.txt", "w+");
+    sample(N, a, lambda, gen, 0);
+    FILE *f = fopen("./txt/pois0_res.txt", "w+");
     fprintf(f, "%f\n", lambda);
+    for(int i=0; i<N; ++i)
+        fprintf(f, "%d\n", a[i]);
+    fclose(f);
 
+    sample(N, a, lambda, gen, 1);
+    f = fopen("./txt/pois1_res.txt", "w+");
+    fprintf(f, "%f\n", lambda);
     for(int i=0; i<N; ++i)
         fprintf(f, "%d\n", a[i]);
     fclose(f);
@@ -133,13 +139,13 @@ void test_ecdf(){
 
 
 int main(){
-    //test_rpois();
+    test_rpois();
     //test_pchisq();
     //test_pval();
-    test_psample();
+    // test_psample();
     // test_chi2();
     //test_ecdf();
 
-    std::mt19937_64 gen(std::random_device{}());
-    pecdf(20.1, 20.9, 0.15, 10000, 1000, gen);
+    // std::mt19937_64 gen(std::random_device{}());
+    // pecdf(20.1, 20.9, 0.15, 10000, 1000, gen);
 }

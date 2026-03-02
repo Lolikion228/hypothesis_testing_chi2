@@ -47,7 +47,7 @@ int comp(const void* a, const void* b) {
     return 0;
 }
 
-//F must be F[ (int) (1 / n_bins) ]
+//F must be F[ (int) (1 / step_size) ]
 // X[i] must be from [0,1]
 void ecdf(double *X, int N, double step_size, double *F){
     double sorted_X[N];

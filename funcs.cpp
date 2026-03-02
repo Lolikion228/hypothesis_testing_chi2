@@ -27,11 +27,6 @@ double dchsisq(double t, int k){
     return c * pow(t, k / 2. - 1) * exp(-t / 2.);
 }
 
-double pchsisq(double t, int k){
-    double c = pow(0.5, k / 2.) / std::tgamma(k / 2.);
-    return c * pow(t, k / 2. - 1) * exp(-t / 2.);
-}
-
 
 double chisq_stat(int *X, int sample_size, double *p, int N, int verbose){
     double res = 0;

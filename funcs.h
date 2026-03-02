@@ -2,8 +2,14 @@
 #include <iostream>
 
 
-double pchsisq(double t, int k);
+// double pchsisq(double t, int k);
 
+
+/*
+X: sample
+p: vector of probs
+N: size of p
+*/
 double chisq_stat(int *X, int sample_size, double *p, int N, int verbose);
 
 
