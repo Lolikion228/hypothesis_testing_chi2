@@ -5,7 +5,7 @@
 
 const int seed = 1337;
 
-// g++ *.cpp -o ./main && ./main && Rscript ./R_scripts/pois.R
+// g++ *.cpp -O3 -march=native -o ./main && time ./main && Rscript ./R_scripts/pois.R
 void test_rpois(){
     std::mt19937_64 gen(seed);
     const int N = 10000;
@@ -88,14 +88,41 @@ void test_psample(){
     fclose(f);
 }
 
-
-void test_chi2(){
-    int N = 100000;
-    double h0_param = 9.1;
-    double h1_param = 9.1;
+// g++ *.cpp -O3 -march=native -o ./main && time ./main
+void test_chi2_v2(){
+    int N = 40;
+    double h0_param = 8.1;
+    double h1_param = 11.1;
     std::mt19937_64 gen(std::random_device{}());
-
     int right_lim = h0_param + 3 * sqrt(h0_param);
+    
+    double p[right_lim];
+    double t = exp(-h0_param);
+    double sum = t;
+    p[0] = t;
+    for(int i=1; i<right_lim; ++i){
+        t *= h0_param / i;
+        p[i] = t;
+        sum += p[i];
+    }
+    p[right_lim - 1] += (1 - sum);
+
+    int X[N];
+    sample(N, X, h1_param, gen, 0);
+    std::cout << "sample:\n";
+    print_arr(X, N);
+    double res = chisq_stat(X, N, p, right_lim, 2, 3.1);
+    std::cout << "chi2 = " << res << "\n";
+}
+
+// g++ *.cpp -O3 -march=native -o ./main && time ./main && Rscript ./R_scripts/chi2.R
+void test_chi2(){
+    int N = 10000;
+    double h0_param = 8.1;
+    double h1_param = 8.1;
+    std::mt19937_64 gen(std::random_device{}());
+    int right_lim = h0_param + 3 * sqrt(h0_param);
+    
     double p[right_lim];
     double t = exp(-h0_param);
     double sum = t;
@@ -110,8 +137,7 @@ void test_chi2(){
     FILE *f = fopen("./txt/chi2.txt", "w+");
     fprintf(f,"%d\n", right_lim - 1);
     int X[N];
-    double t0;
-    for(int i=0; i<1000; ++i){
+    for(int i=0; i<10000; ++i){
         sample(N, X, h1_param, gen, 0);
         fprintf(f, "%f\n", chisq_stat(X, N, p, right_lim, 0));
     }
@@ -139,11 +165,12 @@ void test_ecdf(){
 
 
 int main(){
-    test_rpois();
+    // test_rpois();
     //test_pchisq();
     //test_pval();
     // test_psample();
-    // test_chi2();
+    //test_chi2();
+    test_chi2_v2();
     //test_ecdf();
 
     // std::mt19937_64 gen(std::random_device{}());

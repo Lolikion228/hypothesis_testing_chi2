@@ -57,8 +57,6 @@ k <- z[1]
 y <- z[2:length(z)]
 y <- na.omit(y)
 y <- y
-print(k)
-print(mean(y))
-png("./pics/chi.png", width = 1920, height = 1080, res = 120)
+png("./pics/chi2.png", width = 1920, height = 1080, res = 120)
 plot_hist_with_chisq_base(y, k)
 dev.off()
