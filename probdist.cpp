@@ -3,7 +3,7 @@
 //
 
 #include <math.h>
-#include "PROBDIST.H"
+#include "probdist.h"
 
 const double Eps = 1e-15;
 

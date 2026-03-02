@@ -48,7 +48,7 @@ int comp(const void* a, const void* b) {
 // X[i] must be from [0,1]
 void ecdf(double *X, int N, double step_size, double *F){
     int n_bins = (1.0 / step_size);
-    for(int i=0; i<N; ++i) ++F[ (int) (X[i] * n_bins) ];
+    for(int i=0; i<N; ++i) ++F[ (int) (X[i] * n_bins) ]; // if X[i]=1 then =( 
     
     F[0] = F[0] / N;
     for(int i=1; i<n_bins; ++i){

@@ -1,7 +1,6 @@
 #include "funcs.h"
 #include "gen.h"
-#include "PROBDIST.H"
-#include "cstring"
+#include "probdist.h"
 
 
 double pval(double h0_param, double h1_param, int sample_size, std::mt19937_64 &gen, int verbose);

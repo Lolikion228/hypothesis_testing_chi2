@@ -1,7 +1,7 @@
 #include <iostream>
 #include "gen.h"
 #include "mod.h"
-#include "PROBDIST.H"
+#include "probdist.h"
 
 const int seed = 1337;
 
@@ -67,8 +67,8 @@ void test_psample(){
     std::mt19937_64 gen(std::random_device{}());
     double lambda1 = 20.4;
     double lambda2 = 20.6;
-    const int psample_size = 1000;
-    int main_sample_size = 10000;
+    const int psample_size = 10000;
+    int main_sample_size = 1000;
 
     // ecdf of pvalue at H_0
     double p0[psample_size];
@@ -156,7 +156,8 @@ void test_chi2(){
 // g++ *.cpp -o ./main && ./main
 void test_ecdf(){
 
-    double X[] = {0.6, 0.6, 0.04, 0.03, 0.5, 0.5, 0.51, 0.5, 0.71, 0.84};
+    //double X[] = {1, 0.6, 0.04, 0.03, 0.5, 0.5, 0.51, 0.5, 0.71, 0.84};
+    double X[] = {0.999, 0.6, 0.04, 0.03, 0.5, 0.5, 0.51, 0.5, 0.71, 0.84};
     // double X[] = { 0.33, 0.5, 0.35, 0.51, 0.5, 0.71, 0.74};
     double step = 0.05;
     int N = 1 / step;
@@ -170,18 +171,27 @@ void test_ecdf(){
     }
 }
 
+// g++ *.cpp -O3 -march=native -o ./main && time ./main 
+void test_pecdf(){
+    double lambda1 = 18.1;
+    double lambda2 = 18.6;
+    double alpha = 0.1;
+    int main_sample_size = 1000;
+    int psample_size = 10000;
+    std::mt19937_64 gen(std::random_device{}());
+    pecdf(lambda1, lambda2, alpha, psample_size, main_sample_size, gen);
+}
+
 /*
-mem leaks?
+ X[i]=1 in ecdf out of bounds of array?
 */
 int main(){
-    // test_rpois();
+    //test_rpois();
     //test_chi2();
     //test_chi2_v2();
-    // test_pchisq();
-    // test_ecdf();
+    //test_pchisq();
+    //test_ecdf();
     // test_pval();
-    // test_psample();
-
-    // std::mt19937_64 gen(std::random_device{}());
-    // pecdf(20.1, 20.9, 0.15, 10000, 1000, gen);
+    //test_psample();
+    // test_pecdf();
 }
