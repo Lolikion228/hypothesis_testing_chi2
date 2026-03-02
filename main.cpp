@@ -147,18 +147,18 @@ void test_chi2(){
 }
 
 
-
+// g++ *.cpp -o ./main && ./main
 void test_ecdf(){
 
-    double X[] = {0.9, 0.9, 0.04, 0.03, 0.5, 0.5, 0.5, 0.5, 0.7};
-
+    double X[] = {0.6, 0.6, 0.04, 0.03, 0.5, 0.5, 0.51, 0.5, 0.71, 0.84};
+    // double X[] = { 0.33, 0.5, 0.35, 0.51, 0.5, 0.71, 0.74};
     double step = 0.05;
     int N = 1 / step;
     double F[N]{};
 
-    ecdf(X, 9, step, F);
+    ecdf(X, 7, step, F);
 
-    print_arr(X, 9);
+    print_arr(X, 7);
     for(int i=0; i<N; ++i){
         printf("%.2f  %.2f\n", step*(i+1), F[i]);
     }
@@ -169,12 +169,12 @@ int main(){
     // test_rpois();
     //test_chi2();
     //test_chi2_v2();
+    // test_pchisq();
 
-    test_pchisq();
+    test_ecdf();
 
     //test_pval();
     // test_psample();
-    //test_ecdf();
     // std::mt19937_64 gen(std::random_device{}());
     // pecdf(20.1, 20.9, 0.15, 10000, 1000, gen);
 }

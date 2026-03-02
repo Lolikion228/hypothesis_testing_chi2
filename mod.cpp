@@ -50,28 +50,10 @@ int comp(const void* a, const void* b) {
 //F must be F[ (int) (1 / step_size) ]
 // X[i] must be from [0,1]
 void ecdf(double *X, int N, double step_size, double *F){
-    double sorted_X[N];
-    memcpy(sorted_X, X, sizeof(double)*N);
-    qsort(X, N, sizeof(double), comp);
-
     int n_bins = (1.0 / step_size);
-    double t = step_size;
-    int j = 0;
-
-    for(int i=0; i<N; ++i){
-        // std::cout << "i = "<< i << "\n";
-        // std::cout << "X[i] = "<< X[i] << "\n";
-        while(X[i] >= t){
-            // std::cout << "fix "<< j << " " << t << "\n";
-            ++j;
-            t += step_size;
-        }
-        // std::cout << "good "<< j << " " << t << "\n\n";
-        ++F[j];
-    }
-
+    for(int i=0; i<N; ++i) ++F[ (int) (X[i] * n_bins) ];
+    
     F[0] = F[0] / N;
-    double cum = F[0];
     for(int i=1; i<n_bins; ++i){
         F[i] = F[i-1] + F[i] / N;
     }
