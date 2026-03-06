@@ -3,6 +3,8 @@
 const double GOOD_STEP_SIZE = 0.05;
 const double GOOD_CUM_EXP_FREQ_THRESH = 5.0;
 const double EPS = 1e-6;
+const double ALMOST_ONE = 1.0 - EPS;
+
 
 double pval(double h0_param, double h1_param, int sample_size, std::mt19937_64 &gen, int verbose){
     int X[sample_size];
@@ -25,7 +27,9 @@ double pval(double h0_param, double h1_param, int sample_size, std::mt19937_64 &
     if(verbose >= 1)
         std::cout << "chi2 = " << t0 << "\n";
 
-    return 1 - pChi(t0, right_lim - 1);
+    double res = 1 - pChi(t0, right_lim - 1);
+    
+    return std::min(res, ALMOST_ONE);
 }
 
 
@@ -35,17 +39,9 @@ void psample(double h0_param, double h1_param, int psample_size,
         X[i] = pval(h0_param, h1_param, main_sample_size, gen, 0);
 }
 
-int comp(const void* a, const void* b) {
-    double arg1 = *(const double*)a;
-    double arg2 = *(const double*)b;
-    
-    if (arg1 < arg2) return -1;
-    if (arg1 > arg2) return 1;
-    return 0;
-}
 
 //F must be F[ (int) (1 / step_size) ]
-// X[i] must be from [0,1]
+// X[i] must be from [0,1)  [1 excluded]
 void ecdf(double *X, int N, double step_size, double *F){
     int n_bins = (1.0 / step_size);
     for(int i=0; i<N; ++i) ++F[ (int) (X[i] * n_bins) ]; // if X[i]=1 then =( 
