@@ -176,12 +176,18 @@ void test_pecdf(){
 
 
 int main(){
+    // std::random_device rd;
+    // std::mt19937 gen(rd());
+    // std::uniform_real_distribution<double> dis(0.0, 1.0);
+    // for(int i=0; i<20; ++i)
+    //     std::cout << dis(gen) << "\n";
+    
     //test_rpois();
     //test_chi2();
     // test_chi2_v2();
     //test_pchisq();
     //test_ecdf();
     //test_pval();
-    //test_psample();
+    test_psample();
     // test_pecdf();
 }

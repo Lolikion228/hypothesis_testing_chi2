@@ -25,10 +25,11 @@ double pval(double h0_param, double h1_param, int sample_size, std::mt19937_64 &
     int k;
     double t0 = chisq_stat(X, sample_size, verbose, GOOD_CUM_EXP_FREQ_THRESH, h0_param, k);
     
-    if(verbose >= 1)
+    if(verbose >= 1){
         std::cout << "d.f. = " << k << "\n";
         std::cout << "chi2 = " << t0 << "\n";
-
+    }
+    
     double res = 1 - pChi(t0, k - 1);
     
     return std::min(res, ALMOST_ONE);
