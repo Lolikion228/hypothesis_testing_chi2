@@ -12,7 +12,8 @@ N: size of p
 */
 double chisq_stat(int *X, int sample_size, double *p, int N, int verbose);
 
-double chisq_stat(int *X, int sample_size, double *p, int N, int verbose, double cum_exp_freq_thresh);
+double chisq_stat(int *X, int sample_size, int verbose, double cum_exp_freq_thresh,
+                 double h0_param, int &k);
 
 template <typename T>
 void print_arr(T x, int n){

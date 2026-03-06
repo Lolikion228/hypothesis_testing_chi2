@@ -21,13 +21,15 @@ double pval(double h0_param, double h1_param, int sample_size, std::mt19937_64 &
         sum += p[i];
     }
     p[right_lim - 1] += (1 - sum);
-
-    double t0 = chisq_stat(X, sample_size, p, right_lim, verbose, GOOD_CUM_EXP_FREQ_THRESH);
+     
+    int k;
+    double t0 = chisq_stat(X, sample_size, verbose, GOOD_CUM_EXP_FREQ_THRESH, h0_param, k);
     
     if(verbose >= 1)
+        std::cout << "d.f. = " << k << "\n";
         std::cout << "chi2 = " << t0 << "\n";
 
-    double res = 1 - pChi(t0, right_lim - 1);
+    double res = 1 - pChi(t0, k - 1);
     
     return std::min(res, ALMOST_ONE);
 }

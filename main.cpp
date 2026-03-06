@@ -55,9 +55,9 @@ void test_pval(){
     std::mt19937_64 gen(std::random_device{}());
 
     double lambda1 = 20.5;
-    double lambda2 = 20.9;
+    double lambda2 = 20.6;
 
-    double p = pval(lambda1, lambda2, 10000, gen, 1);
+    double p = pval(lambda1, lambda2, 1000, gen, 1);
     std::cout << "pval = " << p << "\n";
 }
 
@@ -66,7 +66,7 @@ void test_pval(){
 void test_psample(){
     std::mt19937_64 gen(std::random_device{}());
     double lambda1 = 20.4;
-    double lambda2 = 20.6;
+    double lambda2 = 20.8;
     const int psample_size = 10000;
     int main_sample_size = 1000;
 
@@ -97,27 +97,19 @@ void test_psample(){
 // g++ *.cpp -o ./main && ./main
 void test_chi2_v2(){
     int N = 40;
-    double h0_param = 8.1;
-    double h1_param = 11.1;
+    double h0_param = 20.1;
+    double h1_param = 23.1;
     std::mt19937_64 gen(std::random_device{}());
-    int right_lim = h0_param + 3 * sqrt(h0_param);
-    
-    double p[right_lim];
-    double t = exp(-h0_param);
-    double sum = t;
-    p[0] = t;
-    for(int i=1; i<right_lim; ++i){
-        t *= h0_param / i;
-        p[i] = t;
-        sum += p[i];
-    }
-    p[right_lim - 1] += (1 - sum);
+
 
     int X[N];
     sample(N, X, h1_param, gen, 0);
     std::cout << "sample:\n";
     print_arr(X, N);
-    double res = chisq_stat(X, N, p, right_lim, 2, 3.1);
+    double cum_exp_freq_thresh = 4.0;
+    int k;
+    double res = chisq_stat(X, N, 2, cum_exp_freq_thresh, h0_param, k);
+    std::cout << "cnt_groups = " << k << '\n';
     std::cout << "chi2 = " << res << "\n";
 }
 
@@ -182,16 +174,14 @@ void test_pecdf(){
     pecdf(lambda1, lambda2, alpha, psample_size, main_sample_size, gen);
 }
 
-/*
- X[i]=1 in ecdf out of bounds of array?
-*/
+
 int main(){
     //test_rpois();
     //test_chi2();
-    //test_chi2_v2();
+    // test_chi2_v2();
     //test_pchisq();
     //test_ecdf();
-    // test_pval();
+    //test_pval();
     //test_psample();
     // test_pecdf();
 }
